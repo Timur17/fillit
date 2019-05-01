@@ -6,7 +6,7 @@
 /*   By: wtorwold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 19:46:28 by wtorwold          #+#    #+#             */
-/*   Updated: 2018/12/24 18:54:02 by wtorwold         ###   ########.fr       */
+/*   Updated: 2019/05/01 20:35:10 by wtorwold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int main (int argc, char **ar)
 {
 	int fd;
-	char *sqr;
+	t_list *sqr;
 
 	if (argc != 2)
 	{

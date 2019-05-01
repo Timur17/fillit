@@ -6,14 +6,14 @@
 #    By: wtorwold <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/01 15:11:11 by wtorwold          #+#    #+#              #
-#    Updated: 2019/02/11 13:25:58 by wtorwold         ###   ########.fr        #
+#    Updated: 2019/05/01 18:26:28 by wtorwold         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
 OUT = *.o
-SRC = ft_*.c main.c
+SRC = libft/ft_*.c main.c ft_*c
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: wtorwold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 19:46:28 by wtorwold          #+#    #+#             */
-/*   Updated: 2018/12/24 18:54:02 by wtorwold         ###   ########.fr       */
+/*   Updated: 2019/05/01 20:45:27 by wtorwold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,84 @@
 #include "fillit.h"
 #include <string.h>
 
-int	ft_check_first(char *tetr, int ret)
+static int	ft_check_second(char *tetr)
 {
-	int i = 10%5;
-	printf(" %d\n", i);
+	int i;
+	int cross;
+
+	i = 0;
+	cross = 0;
+	while(i < 20)
+	{
+		if(tetr[i] == '#')
+		{
+			if(tetr[i - 1] == '#')
+				cross++;
+			if(tetr[i + 1] == '#')
+				cross++;
+			if(i + 5 < 19 && tetr[i + 5] == '#')
+				cross++;
+			if(i - 5 >= 0 && tetr[i - 5] == '#')
+				cross++;
+		}
+		i++;
+	}
+	printf("cross = %d\n", cross);
+	if(cross < 6)
+		return(0);
+	return(1);
+}
+
+static int	ft_check_first(char *tetr, int ret)
+{
+	int i;
+	int dot;
+	int hash;
+
+	i = 0;
+	dot = 0;
+	hash = 0;
+	printf("i =  %d\n", i);
 	if (ret !=20 && ret != 21)
 		return (0);
+	while(tetr[i] != '\0')
+	{
+		if(tetr[i] == '.')
+			dot++;
+		if(tetr[i] == '#')
+			hash++;
+		if((i + 1)%5 == 0)
+			if (tetr[i] != '\n')
+				return(0);
+		i++;
+	}
+	if (dot != 12 || hash != 4)
+		return(0);
 	if (tetr[20] != '\n' && tetr[20] != '\0')
 		return (0);
 	return(1);
 }	
 
-char *ft_read (int fd)
+t_list *ft_read (int fd)
 {
 	int ret;
 	int BUF_SIZE = 21;
 	char buf[BUF_SIZE + 1];
-	char *sqr = NULL;
+	t_list *sqr = NULL;
 	
-	if((ret = read(fd, buf, BUF_SIZE)) > 0 )
+	while((ret = read(fd, buf, BUF_SIZE)) > 0 )
 	{
 		buf[ret] = '\0';
 		printf("%s %d\n", buf, ret);
 		if (ft_check_first(buf, ret) == 0)
-			return (sqr);
+			return (NULL);
+		if (ft_check_second(buf) == 0)
+			return (NULL);
 	}
 	if (ret == -1)
-		return (sqr);
-	sqr = (char *)malloc(sizeof(char) * (ret + 1));
-	memcpy(sqr, buf, ret);
+		return (NULL);
+	sqr = (t_list *)malloc(sizeof(t_list));
+    ft_memcpy(sqr->content, buf, ret);
 	return(sqr);
 
 }
