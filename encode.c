@@ -11,14 +11,47 @@
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include "fillit.h"
+#include <stdio.h>
+# include <fcntl.h>
+
+static void	checkpos(char *tetri, int code[6])
+{
+	int		i;
+
+	i = 0;
+	code[0] = 0;
+	code[1] = 0;
+	code[2] = 5;
+	code[3] = 5;
+	while (tetri[i])
+	{
+		if (tetri[i] == '#')
+		{
+			if ((i % 5) > code[0])
+				code[0] = (i % 5);
+			if ((i / 5) > code[1])
+				code[1] = (i / 5);
+			if ((i % 5) < code[2])
+				code[2] = (i % 5);
+			if ((i / 5) < code[3])
+				code[3] = (i / 5);
+				
+		}
+		i++;
+	}
+	i = 0;
+	while(i < 4)
+		printf("%d", code[i++]);
+}
 
 
 int main (int argc, char **ar)
 {
 	int fd;
-	t_list *sqr;
-	t_tetri *test;
+	char sqr[21];
+	int code[6];
+	int ret;
+	
 
 	if (argc != 2)
 	{
@@ -28,23 +61,12 @@ int main (int argc, char **ar)
 	fd = open(ar[1], O_RDONLY);
 	if (fd == -1)
 		printf("Error open.");
-	sqr = ft_read(fd);
-//	test = sqr->next->content;
-        if (sqr == NULL)
-	{
-                printf("Error sqr\n");
-		return(1);
-	}
-        else
-                printf("sqr is ok\n");	
-	while (sqr)
-	{
-		test = sqr->content;
-//		printf("%s\n", (char *)sqr->content);
-		printf("main = %s\n", (char *)test->tetris);
-		sqr= sqr->next;
-	}
-/*	if (sqr == NULL)
+	ret = read(fd, sqr, 21);
+	sqr[ret] = '\0';
+	printf("%s\n", sqr);
+	checkpos(sqr, code); 
+/*	sqr = ft_read(fd);
+	if (sqr == NULL)
 		printf("Error sqr.");
 	else 
 		 printf("sqr is ok");	*/
