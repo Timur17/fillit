@@ -78,10 +78,8 @@ t_list *ft_read (int fd)
 	int BUF_SIZE = 21;
 	char buf[BUF_SIZE + 1];
 	t_list *sqr = NULL;
-	char i;
 	t_list *p;
 	
-	i = 'A';
 	while((ret = read(fd, buf, BUF_SIZE)) > 0 )
 	{
 		buf[ret] = '\0';
@@ -89,18 +87,12 @@ t_list *ft_read (int fd)
 			return (NULL);
 		if (ft_check_second(buf) == 0)
 			return (NULL);
-		ft_createlist(&sqr, buf, &p, &i);
-//	         sqr = (t_list *)malloc(sizeof(t_list));
-//        	 sqr->content = (void *)malloc(sizeof(void) * ret);
-//        	 ft_memcpy(sqr->content, buf, ret);
+		ft_createlist(&sqr, buf, &p);
+		if(sqr == NULL)
+			return (NULL);
 	}
-//	if ((ret == 0) && (sqr == NULL));
-//		return(NULL);
-//	if (sqr == NULL)
-//		printf("sqr == NULL\n");
 	if (ret == -1)
 		return (NULL);
-//	printf("%s\n", (char *)sqr->content);
 	return(sqr);
 
 }

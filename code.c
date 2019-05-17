@@ -1,65 +1,65 @@
 #include "libft/libft.h"    
 #include "fillit.h"
 
-int			blockletter(char *blockcode, char *buf, char c, int xyjbm[5])
+int			blockletter(char *blockcode, char *buf, char c, int temp[5])
 {
-	if (buf[(xyjbm[0] + 5 * xyjbm[1])] == '.')
+	if (buf[(temp[0] + 5 * temp[1])] == '.')
 	{
-		blockcode[xyjbm[2]] = '.';
-		xyjbm[2]++;
+		blockcode[temp[2]] = '.';
+		temp[2]++;
 		return (1);
 	}
-	else if (buf[(xyjbm[0] + 5 * xyjbm[1])] == '#')
+	else if (buf[(temp[0] + 5 * temp[1])] == '#')
 	{
-		blockcode[xyjbm[2]] = c;
-		xyjbm[2]++;
+		blockcode[temp[2]] = c;
+		temp[2]++;
 		return (1);
 	}
 	return (-1);
 }
 
-void		checkright(char *blockcode, char *buf, char c, int xyjbm[5])
+void		checkright(char *blockcode, char *buf, char c, int temp[5])
 {
-	xyjbm[3] += blockletter(blockcode, buf, c, xyjbm);
-	blockcode[xyjbm[2]++] = 'r';
-	xyjbm[0]++;
+	temp[3] += blockletter(blockcode, buf, c, temp);
+	blockcode[temp[2]++] = 'r';
+	temp[0]++;
 }
 
-void		checkleft(char *blockcode, char *buf, char c, int xyjbm[5])
+void		checkleft(char *blockcode, char *buf, char c, int temp[5])
 {
-	xyjbm[3] += blockletter(blockcode, buf, c, xyjbm);
-	blockcode[xyjbm[2]++] = 'l';
-	xyjbm[0]--;
+	temp[3] += blockletter(blockcode, buf, c, temp);
+	blockcode[temp[2]++] = 'l';
+	temp[0]--;
 }
 
-void		checkdown(char *blockcode, char *buf, char c, int xyjbm[5])
+void		checkdown(char *blockcode, char *buf, char c, int temp[5])
 {
-	xyjbm[3] += blockletter(blockcode, buf, c, xyjbm);
-	blockcode[xyjbm[2]++] = 'd';
-	xyjbm[1]++;
+	temp[3] += blockletter(blockcode, buf, c, temp);
+	blockcode[temp[2]++] = 'd';
+	temp[1]++;
 }
 
 char	*codeblock(char *bc, char *buf, char c, int code[6])
 {
-	int		xyjbm[5];
+	int		temp[5];
 
-	xyjbm[0] = code[2];
-	xyjbm[1] = code[3];
-	xyjbm[2] = 0;
-	xyjbm[3] = 0;
-	xyjbm[4] = code[4] * code[5];
-	while (xyjbm[3] < (xyjbm[4] - 1))
+	temp[0] = code[2];
+	temp[1] = code[3];
+	temp[2] = 0;
+	temp[3] = 0;
+	temp[4] = code[4] * code[5];
+	while (temp[3] < (temp[4] - 1))
 	{
-		while (xyjbm[0] < code[0] && xyjbm[3] < (xyjbm[4] - 1))
-			checkright(bc, buf, c, xyjbm);
-		if (xyjbm[1] < code[1] && xyjbm[3] < (xyjbm[4] - 1))
-			checkdown(bc, buf, c, xyjbm);
-		while (xyjbm[0] > code[2] && xyjbm[3] < (xyjbm[4] - 1))
-			checkleft(bc, buf, c, xyjbm);
-		if (xyjbm[1] < code[1] && xyjbm[3] < (xyjbm[4] - 1))
-			checkdown(bc, buf, c, xyjbm);
+		while (temp[0] < code[0] && temp[3] < (temp[4] - 1))
+			checkright(bc, buf, c, temp);
+		if (temp[1] < code[1] && temp[3] < (temp[4] - 1))
+			checkdown(bc, buf, c, temp);
+		while (temp[0] > code[2] && temp[3] < (temp[4] - 1))
+			checkleft(bc, buf, c, temp);
+		if (temp[1] < code[1] && temp[3] < (temp[4] - 1))
+			checkdown(bc, buf, c, temp);
 	}
-	blockletter(bc, buf, c, xyjbm);
+	blockletter(bc, buf, c, temp);
 	return (bc);
 }
 

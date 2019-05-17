@@ -13,6 +13,21 @@
 #include "libft/libft.h"
 #include "fillit.h"
 
+/*void    ft_freetetri(void *block, size_t size)
+{
+        printf("%d\n", (int)size);  
+	if(block != NULL)
+          {
+                printf("block->tetris is valid\n");
+                free(((t_tetri *)block)->tetris);
+                free(block);
+                block = NULL;
+	//	if(((t_tetri *)block)->tetris != NULL) 
+	//	printf("%s\n", ((t_tetri *)block)->tetris);
+	//	printf("%d\n", (int)size);
+          }
+}*/
+
 
 int main (int argc, char **ar)
 {
@@ -27,9 +42,8 @@ int main (int argc, char **ar)
 	}
 	fd = open(ar[1], O_RDONLY);
 	if (fd == -1)
-		printf("Error open.");
+		printf("Error opening");
 	sqr = ft_read(fd);
-//	test = sqr->next->content;
         if (sqr == NULL)
 	{
                 printf("Error sqr\n");
@@ -40,13 +54,13 @@ int main (int argc, char **ar)
 	while (sqr)
 	{
 		test = sqr->content;
-//		printf("%s\n", (char *)sqr->content);
 		printf("main = %s\n", (char *)test->tetris);
 		sqr= sqr->next;
 	}
-/*	if (sqr == NULL)
-		printf("Error sqr.");
-	else 
-		 printf("sqr is ok");	*/
+	if (close(fd) == -1)
+	{
+		printf("Error closing\n");
+		return(1);
+	}	
 }
 

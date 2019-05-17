@@ -10,43 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "fillit.h"
 
-
-int main (int argc, char **ar)
+void    ft_freetetri(void *block, size_t size)
 {
-	int fd;
-	t_list *sqr;
-	t_tetri *test;
-
-	if (argc != 2)
-	{
-		printf("Error argc");
-		return(-1);
-	}
-	fd = open(ar[1], O_RDONLY);
-	if (fd == -1)
-		printf("Error open.");
-	sqr = ft_read(fd);
-//	test = sqr->next->content;
-        if (sqr == NULL)
-	{
-                printf("Error sqr\n");
-		return(1);
-	}
-        else
-                printf("sqr is ok\n");	
-	while (sqr)
-	{
-		test = sqr->content;
-//		printf("%s\n", (char *)sqr->content);
-		printf("main = %s\n", (char *)test->tetris);
-		sqr= sqr->next;
-	}
-/*	if (sqr == NULL)
-		printf("Error sqr.");
-	else 
-		 printf("sqr is ok");	*/
+        printf("%d\n", (int)size);  
+	if(block != NULL)
+          {
+                printf("block->tetris is valid\n");
+                free(((t_tetri *)block)->tetris);
+                free(block);
+                block = NULL;
+          }
 }
-

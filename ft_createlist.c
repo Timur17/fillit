@@ -62,15 +62,18 @@ t_tetri	*ft_tetcode(char *buf, char c)
 	t_tetri *block;
 	int	code[6];
 	char	*blockcode;
-	int i = 0;
-	block = (t_tetri *)malloc(sizeof(t_tetri));
-	blockcode = ft_memalloc(14);
+	int i;
+
+	i = 0;
+	if ((block = (t_tetri *)malloc(sizeof(t_tetri))) == NULL)
+		return (NULL);
+	if ((blockcode = ft_memalloc(14)) == NULL)
+		return(NULL);
 	ft_size(buf, code);
 	code[4] = 1 + code[0] - code[2];
 	code[5] = 1 + code[1] - code[3];
 	block->x = code[4];
 	block->y = code[5];
-//	ft_characteristic(&blockcode, buf, code, c);
 	block->tetris = codeblock(blockcode, buf, c, code);
 	printf("%s %ld\n", block->tetris, ft_strlen(blockcode));
 	printf("x = %d\n", block->x); 
@@ -80,27 +83,41 @@ t_tetri	*ft_tetcode(char *buf, char c)
 }
 
 
-void	ft_createlist(t_list **sqr, char *buf, t_list **p, char *i) 
+void	ft_createlist(t_list **sqr, char *buf, t_list **p) 
 {
 	t_tetri *block;
-	
-//	*sqr = ft_lstnew(buf, ret);
+	static char c = 'A';
+
 	if(*sqr == NULL)
 {
-	block = ft_tetcode(buf, *i);
-	printf("result = %s %ld\n", block->tetris, ft_strlen(block->tetris));
+	block = ft_tetcode(buf, c);
+	if (block == NULL)
+		return;
 	*sqr = ft_lstnew(block, sizeof(t_tetri));
+	if (*sqr == NULL)
+	{
+		ft_lstdel(sqr, ft_freetetri);
+		return;
+	}
 	*p = *sqr;
 	printf("------------------------\n");
 }
 	else 
 {
-	block = ft_tetcode(buf, *i);
+	block = ft_tetcode(buf, c);
+	if (block == NULL) 
+	{
+		ft_lstdel(sqr, ft_freetetri);
+		return ;
+	}
 	(*p)->next = ft_lstnew(block, sizeof(t_tetri));
+	if((*p)->next ==NULL)
+		{
+			ft_lstdel(sqr, ft_freetetri);
+			return;
+		}
 	*p = (*p)->next;
-	 printf("result = %s %ld\n", block->tetris, ft_strlen(block->tetris));
 	printf("------------------------\n");   
 }
-//	*sqr = ft_lstnew(ft_tetcode(buf, *i), (size_t)ret);
-//	return(*sqr);
+	c = c + 1;
 }

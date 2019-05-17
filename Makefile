@@ -13,7 +13,7 @@
 NAME = fillit
 
 OUT = *.o
-SRC = main.c ft_read.c ft_createlist.c libft/ft_strlen.c libft/ft_memcpy.c libft/ft_lstnew.c libft/ft_memalloc.c libft/ft_bzero.c code.c
+SRC = main.c ft_read.c ft_createlist.c libft/ft_strlen.c libft/ft_memcpy.c libft/ft_lstnew.c libft/ft_memalloc.c libft/ft_bzero.c code.c libft/ft_lstdel.c ft_freetetri.c
 
 all: $(NAME)
 
