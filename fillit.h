@@ -26,5 +26,6 @@ t_list		*ft_read(int fd);
 void		ft_createlist(t_list **sqr, char *buf, t_list **p);
 char    	*codeblock(char *bc, char *buf, char c, int code[6]);
 void		ft_freetetri(void *block, size_t size);
+void		ft_bt(t_list *sqr);
 
 #endif
