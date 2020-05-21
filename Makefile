@@ -3,27 +3,38 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wtorwold <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: lbritni <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/10/01 15:11:11 by wtorwold          #+#    #+#              #
-#    Updated: 2019/05/01 18:26:28 by wtorwold         ###   ########.fr        #
+#    Created: 2019/02/17 13:14:25 by lbritni           #+#    #+#              #
+#    Updated: 2019/02/20 18:04:21 by lbritni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+CC = gcc
+DIR_SOURCE = ./srcs/
+DIR_INCLUDES = ./includes/
+DIR_OBJECTS = ./obj/
+SOURCE = $(wildcard $(DIR_SOURCE)*.c)
+OBJECTS = $(SOURCE:.c=.o)
+FLAGS = -Wall -Wextra -Werror -I$(DIR_INCLUDES)
 NAME = fillit
 
-OUT = *.o
-SRC = main.c ft_read.c ft_createlist.c libft/ft_strlen.c libft/ft_memcpy.c libft/ft_lstnew.c libft/ft_memalloc.c libft/ft_bzero.c code.c libft/ft_lstdel.c ft_freetetri.c backtracking.c libft/ft_memset.c libft/ft_strjoin.c libft/ft_strnew.c
+.PHONY: all clean fclean compile objdir re
 
 all: $(NAME)
 
-$(NAME):
-	gcc -Wall -Wextra -Werror -o fillit $(SRC)
-
 clean:
-	/bin/rm -f $(OUT)
+	/bin/rm -f $(OBJECTS)
 
 fclean: clean
+	/bin/rm -rf $(DIR_OBJECTS)
 	/bin/rm -f $(NAME)
 
-re: fclean all
+$(NAME): $(OBJECTS)
+	$(CC) $(FLAGS) $(OBJECTS) -o $(NAME)
+
+
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
+
+re: fclean $(NAME)
